@@ -50,24 +50,44 @@ body::before{
   pointer-events:none;
 }
 
-/* subtle animated haze overlay */
+/* ✅ pink transparent gradient animation overlay */
 body::after{
   content:"";
-  position:fixed; inset:0;
+  position:fixed; inset:-10%;
   z-index: 1;
   pointer-events:none;
+
   background:
-    radial-gradient(90vmax 60vmax at 25% 25%, rgba(255,255,255,.06), transparent 55%),
-    radial-gradient(80vmax 55vmax at 75% 75%, rgba(255,255,255,.05), transparent 60%),
-    linear-gradient(120deg, rgba(198,55,55,.08), rgba(244,99,58,.06), rgba(120,0,255,.06));
+    radial-gradient(60vmax 45vmax at 20% 20%, rgba(255, 70, 200, .22), transparent 60%),
+    radial-gradient(55vmax 45vmax at 80% 30%, rgba(255, 120, 220, .18), transparent 62%),
+    radial-gradient(70vmax 55vmax at 60% 85%, rgba(190, 90, 255, .16), transparent 65%),
+    linear-gradient(120deg,
+      rgba(255, 60, 180, .10),
+      rgba(255, 140, 220, .08),
+      rgba(150, 80, 255, .10)
+    );
+
   mix-blend-mode: screen;
-  opacity: .9;
-  animation: hazeMove 12s ease-in-out infinite alternate;
+  opacity: .95;
+
+  filter: blur(1px) saturate(1.15);
+  transform: translate3d(0,0,0) scale(1.05);
+  animation: pinkFlow 14s ease-in-out infinite alternate;
 }
 
-@keyframes hazeMove{
-  0%   { transform: translate3d(-1.2%, -1%, 0) scale(1.02); filter: blur(0px); }
-  100% { transform: translate3d(1.2%, 1%, 0) scale(1.02);  filter: blur(1.1px); }
+@keyframes pinkFlow{
+  0%{
+    transform: translate3d(-2%, -1.5%, 0) scale(1.05);
+    filter: blur(1px) saturate(1.10);
+  }
+  50%{
+    transform: translate3d(1.5%, 1%, 0) scale(1.06);
+    filter: blur(1.6px) saturate(1.25);
+  }
+  100%{
+    transform: translate3d(2%, -1%, 0) scale(1.05);
+    filter: blur(1.2px) saturate(1.18);
+  }
 }
 
 /* better mobile viewport behavior */
@@ -97,7 +117,7 @@ h1{
   line-height: 1.1;
   letter-spacing: .5px;
   text-shadow: 0 10px 30px rgba(0,0,0,.65);
-  text-align: center;
+  text-align: center; /* ✅ centered question */
 }
 
 .actions{
@@ -248,13 +268,11 @@ h1{
 
 /* ✅✅ MOBILE: Card sichtbar nach unten schieben, damit oben Itachi bleibt */
 @media (max-width: 640px){
-  /* Grid bleibt, aber wir schieben die Card runter (zuverlässig) */
   .card{
     margin-top: 0 !important;
     transform: translateY(clamp(70px, 14vh, 180px));
   }
 
-  /* optional: bisschen mehr "oben Luft" wegen Statusbar */
   .stage{
     padding-top: calc(env(safe-area-inset-top, 0px) + 12px);
     padding-bottom: clamp(18px, 8vh, 120px);
