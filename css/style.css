@@ -23,6 +23,7 @@
 
 *{ box-sizing:border-box; }
 html,body{ height:100%; margin:0; }
+
 body{
   font-family: "Montserrat Alternates", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--text);
@@ -69,8 +70,17 @@ body::after{
   100% { transform: translate3d(1.2%, 1%, 0) scale(1.02);  filter: blur(1.1px); }
 }
 
+/* better mobile viewport behavior */
+.stage{
+  min-height: 100svh;           /* mobile-friendly (browser UI safe) */
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 40px);
+  position: relative;
+  z-index: 2; /* above overlays */
+}
+
 .card{
-  margin-top: clamp(40px, 10vh, 140px);
   width:min(720px, 92vw);
   border-radius: 22px;
   padding: clamp(18px, 4.2vw, 34px);
@@ -131,6 +141,7 @@ h1{
   font-weight: 700;
   font-size: clamp(18px, 3.8vw, 26px);
 }
+
 .btn .sub{
   margin-top: 4px;
   font-size: 12px;
@@ -142,12 +153,17 @@ h1{
   background: linear-gradient(135deg, rgba(198,55,55,.85), rgba(244,99,58,.75));
   border-color: rgba(255,255,255,.18);
 }
-.btn.yes:hover{ transform: translateY(-2px) scale(1.02); box-shadow: 0 16px 60px rgba(198,55,55,.25); }
+.btn.yes:hover{
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 16px 60px rgba(198,55,55,.25);
+}
 
 .btn.no{
   background: rgba(255,255,255,.05);
 }
-.btn.no:hover{ transform: translateY(-1px) scale(1.01); }
+.btn.no:hover{
+  transform: translateY(-1px) scale(1.01);
+}
 
 /* floating sound toggle */
 .sound{
@@ -229,25 +245,17 @@ h1{
   }
 }
 
-/* better mobile viewport behavior */
-.stage{
-  min-height: 100svh;           /* mobile-friendly (browser UI safe) */
-  display: grid;
-  place-items: center;
-  padding: clamp(16px, 4vw, 40px);
-}
-
-/* Mobile: push card down so background (Itachi) is visible */
+/* ✅✅ MOBILE: Card sichtbar nach unten schieben, damit oben Itachi bleibt */
 @media (max-width: 640px){
+  /* Grid bleibt, aber wir schieben die Card runter (zuverlässig) */
+  .card{
+    margin-top: 0 !important;
+    transform: translateY(clamp(70px, 14vh, 180px));
+  }
+
+  /* optional: bisschen mehr "oben Luft" wegen Statusbar */
   .stage{
-    place-items: start center;  /* anchor content at top */
-    padding-top: calc(env(safe-area-inset-top, 0px) + clamp(64px, 14vh, 180px));
+    padding-top: calc(env(safe-area-inset-top, 0px) + 12px);
     padding-bottom: clamp(18px, 8vh, 120px);
   }
-
-  /* optional: mobile safari hates background-attachment: fixed sometimes */
-  body{
-    background-attachment: scroll;
-  }
 }
-
