@@ -69,15 +69,6 @@ body::after{
   100% { transform: translate3d(1.2%, 1%, 0) scale(1.02);  filter: blur(1.1px); }
 }
 
-.stage{
-  position: relative;
-  z-index: 2;
-  min-height:100%;
-  display:grid;
-  place-items:center;
-  padding: clamp(16px, 4vw, 40px);
-}
-
 .card{
   margin-top: clamp(40px, 10vh, 140px);
   width:min(720px, 92vw);
