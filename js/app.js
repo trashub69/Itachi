@@ -2,7 +2,7 @@
  * Valentine page:
  * - "No" dodges by exploding into tiny birds + crow sfx,
  *   then reappears elsewhere and gathers birds back into the button.
- * - "Yes" pops white hearts + shows popup.
+ * - "Yes" pops white hearts + starts music + shows popup.
  *
  * Required DOM ids:
  *   #btnNo, #btnYes, #fxLayer, #sfxCrow, #bgMusic, #soundToggle
@@ -24,26 +24,26 @@ const CONFIG = {
 };
 
 let muted = false;
+let musicStarted = false;
 
 // Null-guards, damit nix crasht, wenn ein Element fehlt
 if (sfxCrow) sfxCrow.volume = 0.9;
 if (bgMusic) bgMusic.volume = 0.25;
 
-function armMusicOnce() {
-  // Browser brauchen user gesture
-  if (!bgMusic || muted) return;
-  bgMusic.play().catch(() => {});
-}
-window.addEventListener("pointerdown", armMusicOnce, { once: true });
-window.addEventListener("keydown", armMusicOnce, { once: true });
-
+// --- Sound toggle ---
 if (soundToggle) {
-  soundToggle.addEventListener("click", () => {
+  soundToggle.addEventListener("click", async () => {
     muted = !muted;
+
     if (sfxCrow) sfxCrow.muted = muted;
     if (bgMusic) bgMusic.muted = muted;
+
     soundToggle.textContent = muted ? "🔇" : "🔊";
-    if (!muted) armMusicOnce();
+
+    // Wenn Musik schon gestartet war und man unmuted -> weiterlaufen lassen
+    if (!muted && bgMusic && musicStarted) {
+      try { await bgMusic.play(); } catch {}
+    }
   });
 }
 
@@ -284,8 +284,19 @@ if (btnNo) {
 
 /* YES button */
 if (btnYes) {
-  btnYes.addEventListener("click", () => {
+  btnYes.addEventListener("click", async () => {
     popWhiteHearts(btnYes);
+
+    // ✅ Musik startet hier (und nur hier)
+    if (bgMusic && !muted) {
+      try {
+        musicStarted = true;
+        await bgMusic.play();
+      } catch (err) {
+        console.warn("bgMusic blocked:", err);
+      }
+    }
+
     alert(CONFIG.yesPopupText);
   });
 }
