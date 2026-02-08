@@ -237,3 +237,26 @@ h1{
     background-attachment: scroll;
   }
 }
+
+/* better mobile viewport behavior */
+.stage{
+  min-height: 100svh;           /* mobile-friendly (browser UI safe) */
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 40px);
+}
+
+/* Mobile: push card down so background (Itachi) is visible */
+@media (max-width: 640px){
+  .stage{
+    place-items: start center;  /* anchor content at top */
+    padding-top: calc(env(safe-area-inset-top, 0px) + clamp(64px, 14vh, 180px));
+    padding-bottom: clamp(18px, 8vh, 120px);
+  }
+
+  /* optional: mobile safari hates background-attachment: fixed sometimes */
+  body{
+    background-attachment: scroll;
+  }
+}
+
