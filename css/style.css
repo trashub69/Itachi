@@ -1,12 +1,6 @@
-/* ===============================
-   Valentine Naruto-ish Template
-   =============================== */
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@500;700&display=swap');
 
 :root{
-  /* >>> HIER PFAD ZU DEINEM ITACHI BACKGROUND EINFÜGEN <<< */
-  /* WICHTIG: wenn dieses CSS in /css/ liegt, muss es ../assets sein */
   --bg-url: url("../assets/itachi-bg.jpg");
 
   --glass: rgba(10,10,14,.55);
@@ -33,71 +27,69 @@ body{
   background-position: center;
   background-repeat: no-repeat;
 
-  /* desktop nice, mobile oft buggy => unten per media query */
   background-attachment: fixed;
-
   overflow:hidden;
 }
 
-/* dark overlay so text pops on any image */
 body::before{
   content:"";
   position:fixed; inset:0;
   z-index: 0;
   background:
-    radial-gradient(70vmax 50vmax at 50% 40%, rgba(0,0,0,.15), rgba(0,0,0,.75)),
-    linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.7));
+    radial-gradient(70vmax 50vmax at 50% 40%, rgba(0,0,0,.12), rgba(0,0,0,.78)),
+    linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.72));
   pointer-events:none;
 }
 
-/* ✅ pink transparent gradient animation overlay */
 body::after{
   content:"";
-  position:fixed; inset:-10%;
+  position:fixed; inset:-14%;
   z-index: 1;
   pointer-events:none;
 
+  /* more obvious pink wash + motion */
   background:
-    radial-gradient(60vmax 45vmax at 20% 20%, rgba(255, 70, 200, .22), transparent 60%),
-    radial-gradient(55vmax 45vmax at 80% 30%, rgba(255, 120, 220, .18), transparent 62%),
-    radial-gradient(70vmax 55vmax at 60% 85%, rgba(190, 90, 255, .16), transparent 65%),
-    linear-gradient(120deg,
-      rgba(255, 60, 180, .10),
-      rgba(255, 140, 220, .08),
-      rgba(150, 80, 255, .10)
+    radial-gradient(70vmax 55vmax at 18% 18%, rgba(255, 40, 190, .40), transparent 62%),
+    radial-gradient(65vmax 55vmax at 82% 28%, rgba(255, 120, 230, .32), transparent 64%),
+    radial-gradient(80vmax 65vmax at 62% 88%, rgba(200, 70, 255, .28), transparent 68%),
+    linear-gradient(115deg,
+      rgba(255, 40, 190, .18),
+      rgba(255, 130, 235, .12),
+      rgba(165, 80, 255, .18)
     );
 
   mix-blend-mode: screen;
-  opacity: .95;
+  opacity: 1;
 
-  filter: blur(1px) saturate(1.15);
-  transform: translate3d(0,0,0) scale(1.05);
-  animation: pinkFlow 14s ease-in-out infinite alternate;
+  filter: blur(1.2px) saturate(1.45) contrast(1.05);
+  transform: translate3d(0,0,0) scale(1.08);
+
+  animation: pinkFlow 10.5s ease-in-out infinite alternate;
 }
 
 @keyframes pinkFlow{
   0%{
-    transform: translate3d(-2%, -1.5%, 0) scale(1.05);
-    filter: blur(1px) saturate(1.10);
+    transform: translate3d(-2.6%, -1.8%, 0) scale(1.08) rotate(-0.4deg);
+    filter: blur(1.1px) saturate(1.38) contrast(1.05);
   }
   50%{
-    transform: translate3d(1.5%, 1%, 0) scale(1.06);
-    filter: blur(1.6px) saturate(1.25);
+    transform: translate3d(1.9%, 1.2%, 0) scale(1.10) rotate(0.25deg);
+    filter: blur(1.8px) saturate(1.55) contrast(1.08);
   }
   100%{
-    transform: translate3d(2%, -1%, 0) scale(1.05);
-    filter: blur(1.2px) saturate(1.18);
+    transform: translate3d(2.8%, -1.2%, 0) scale(1.08) rotate(0.45deg);
+    filter: blur(1.2px) saturate(1.48) contrast(1.06);
   }
 }
 
 /* better mobile viewport behavior */
 .stage{
-  min-height: 100svh;           /* mobile-friendly (browser UI safe) */
+  min-height: 100svh;
   display: grid;
   place-items: center;
   padding: clamp(16px, 4vw, 40px);
   position: relative;
-  z-index: 2; /* above overlays */
+  z-index: 2;
 }
 
 .card{
@@ -117,7 +109,7 @@ h1{
   line-height: 1.1;
   letter-spacing: .5px;
   text-shadow: 0 10px 30px rgba(0,0,0,.65);
-  text-align: center; /* ✅ centered question */
+  text-align: center;
 }
 
 .actions{
@@ -232,7 +224,7 @@ h1{
   animation: flap .28s ease-in-out infinite;
 }
 
-/* ✅ Hearts on YES click (white, subtle) */
+
 .heart-pop{
   position: fixed;
   z-index: 60;
@@ -261,12 +253,10 @@ h1{
 /* 📱 mobile fixes */
 @media (max-width: 900px){
   body{
-    /* iOS/Android: fixed background macht gern Rendering-Drama */
     background-attachment: scroll;
   }
 }
 
-/* ✅✅ MOBILE: Card sichtbar nach unten schieben, damit oben Itachi bleibt */
 @media (max-width: 640px){
   .card{
     margin-top: 0 !important;
@@ -276,5 +266,12 @@ h1{
   .stage{
     padding-top: calc(env(safe-area-inset-top, 0px) + 12px);
     padding-bottom: clamp(18px, 8vh, 120px);
+  }
+}
+
+/* Optional: reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce){
+  body::after{
+    animation: none;
   }
 }
