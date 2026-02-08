@@ -45,8 +45,7 @@ function playCrow(){
 
 /* ---------- Bird particle helpers ---------- */
 
-function birdSVG(){
-  // Simple "M" bird silhouette. Feel free to replace with a cooler path.
+function birdSVG()
   return `
   <svg viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path class="wing" d="M5 45 C30 15, 45 15, 60 30 C75 15, 90 15, 115 45"
@@ -155,6 +154,32 @@ function burstBirds(from, count=18){
   }
 }
 
+function popWhiteHearts(fromEl){
+  const r = fromEl.getBoundingClientRect();
+  const cx = r.left + r.width/2;
+  const cy = r.top + r.height/2;
+
+  const count = 8; // bewusst nicht overkill
+  for(let i=0;i<count;i++){
+    const h = document.createElement("div");
+    h.className = "heart-pop";
+    h.textContent = "♡";
+
+    const angle = Math.random() * Math.PI * 2;
+    const dist  = 40 + Math.random() * 70;
+    const dx = Math.cos(angle) * dist;
+    const dy = Math.sin(angle) * dist - (30 + Math.random() * 40);
+
+    h.style.left = `${cx}px`;
+    h.style.top  = `${cy}px`;
+    h.style.setProperty("--dx", `${dx.toFixed(1)}px`);
+    h.style.setProperty("--dy", `${dy.toFixed(1)}px`);
+
+    document.body.appendChild(h);
+    h.addEventListener("animationend", () => h.remove());
+  }
+}
+
 function gatherBirds(to, count=18){
   const {w,h} = viewport();
   for(let i=0;i<count;i++){
@@ -237,7 +262,6 @@ function dodge(){
 
 /* Desktop: hover dodge */
 btnNo.addEventListener("pointerenter", (e) => {
-  // if it's a mouse/trackpad hover -> dodge
   if(e.pointerType === "mouse") dodge();
 });
 
@@ -250,7 +274,8 @@ btnNo.addEventListener("touchstart", (e) => {
 /* For keyboard users */
 btnNo.addEventListener("focus", () => dodge());
 
-btnYes.addEventListener("click", () => {
+yesBtn.addEventListener("click", () => {
+  popWhiteHearts(yesBtn);
   alert("Yessss 💖");
 });
 
