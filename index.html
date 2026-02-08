@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Do you want to be my Valentine?</title>
+
+  <!-- =========================================================
+       >>> HIER PFAD ZU DEINEM ITACHI BACKGROUND EINFÜGEN <<<
+       Put your image into: ./assets/itachi-bg.jpg  (or .png/.webp)
+       Then set the CSS below (style.css): --bg-url: url("./assets/itachi-bg.jpg");
+       ========================================================= -->
+
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+  <main class="stage">
+    <section class="card" role="dialog" aria-label="Valentine question">
+      <h1>Do you want to be my Valentine?</h1>
+
+      <div class="actions">
+        <button id="btnYes" class="btn yes" type="button">
+          <span class="label">Yes</span>
+          <span class="sub">✨ obviously ✨</span>
+        </button>
+
+        <button id="btnNo" class="btn no" type="button">
+          <span class="label">No</span>
+          <span class="sub">try again</span>
+        </button>
+      </div>
+
+      <p class="hint">Tip: On mobile, tap “No” — it still dodges 😈</p>
+    </section>
+  </main>
+
+  <!-- Audio (real files, no external URLs) -->
+  <!-- =========================================================
+       >>> HIER PFAD ZU ECHTEM KRAAA-SOUND EINFÜGEN <<<
+       Put your file into: ./assets/crow.mp3
+       ========================================================= -->
+  <audio id="sfxCrow" src="./assets/crow.mp3" preload="auto"></audio>
+
+  <!-- =========================================================
+       >>> HIER PFAD ZU HINTERGRUND-MUSIK EINFÜGEN <<<
+       Put your file into: ./assets/music.mp3
+       ========================================================= -->
+  <audio id="bgMusic" src="./assets/music.mp3" preload="auto" loop></audio>
+
+  <button id="soundToggle" class="sound" type="button" aria-label="Toggle sound">🔊</button>
+
+  <!-- Particle layer -->
+  <div id="fxLayer" class="fx" aria-hidden="true"></div>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>

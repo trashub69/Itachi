@@ -1,0 +1,186 @@
+
+/* ===============================
+   Valentine Naruto-ish Template
+   =============================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@500;700&display=swap');
+
+:root{
+  /* >>> HIER PFAD ZU DEINEM ITACHI BACKGROUND EINFÜGEN <<< */
+  --bg-url: url("./assets/itachi-bg.jpg");
+
+  --glass: rgba(10,10,14,.55);
+  --glass2: rgba(255,255,255,.06);
+
+  --accent: #C63737;
+  --accent2:#F4633A;
+
+  --text: rgba(255,255,255,.95);
+  --muted: rgba(255,255,255,.75);
+
+  --shadow: 0 16px 80px rgba(0,0,0,.55);
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; margin:0; }
+body{
+  font-family: "Montserrat Alternates", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+
+  background-image: var(--bg-url);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow:hidden;
+}
+
+/* dark overlay so text pops on any image */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background:
+    radial-gradient(70vmax 50vmax at 50% 40%, rgba(0,0,0,.15), rgba(0,0,0,.75)),
+    linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.7));
+  pointer-events:none;
+}
+
+.stage{
+  min-height:100%;
+  display:grid;
+  place-items:center;
+  padding: clamp(16px, 4vw, 40px);
+}
+
+.card{
+  width:min(720px, 92vw);
+  border-radius: 22px;
+  padding: clamp(18px, 4.2vw, 34px);
+  background: linear-gradient(180deg, var(--glass), rgba(0,0,0,.35));
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,.10);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+h1{
+  margin:0 0 18px 0;
+  font-size: clamp(26px, 5vw, 44px);
+  line-height: 1.1;
+  letter-spacing: .5px;
+  text-shadow: 0 10px 30px rgba(0,0,0,.65);
+}
+
+.actions{
+  display:flex;
+  gap: clamp(12px, 2.8vw, 18px);
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.btn{
+  appearance:none;
+  border:none;
+  cursor:pointer;
+  user-select:none;
+  -webkit-tap-highlight-color: transparent;
+
+  width: min(260px, 80vw);
+  padding: 14px 18px;
+  border-radius: 999px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: 0 8px 30px rgba(0,0,0,.25);
+
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  position:relative;
+}
+
+.btn:focus-visible{
+  outline: 2px solid rgba(255,255,255,.75);
+  outline-offset: 3px;
+}
+
+.btn .label{
+  font-weight: 700;
+  font-size: clamp(18px, 3.8vw, 26px);
+}
+.btn .sub{
+  margin-top: 4px;
+  font-size: 12px;
+  opacity: .9;
+  letter-spacing: .2px;
+}
+
+.btn.yes{
+  background: linear-gradient(135deg, rgba(198,55,55,.85), rgba(244,99,58,.75));
+  border-color: rgba(255,255,255,.18);
+}
+.btn.yes:hover{ transform: translateY(-2px) scale(1.02); box-shadow: 0 16px 60px rgba(198,55,55,.25); }
+
+.btn.no{
+  background: rgba(255,255,255,.05);
+}
+.btn.no:hover{ transform: translateY(-1px) scale(1.01); }
+
+/* floating sound toggle */
+.sound{
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 50;
+
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.35);
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 12px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* particle overlay */
+.fx{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index: 40;
+}
+
+/* bird particle (simple silhouette) */
+.bird{
+  position:absolute;
+  width: 18px;
+  height: 10px;
+  transform-origin: 50% 60%;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* SVG inside each bird is white by default (works on dark BG) */
+.bird svg{ width:100%; height:100%; display:block; }
+
+@keyframes flap {
+  0%   { transform: rotate(-10deg) scaleY(1); }
+  50%  { transform: rotate(10deg) scaleY(0.92); }
+  100% { transform: rotate(-10deg) scaleY(1); }
+}
+
+.bird .wing{
+  animation: flap .28s ease-in-out infinite;
+}
+.hint{
+  margin: 16px 0 0;
+  text-align:center;
+  font-size: 12px;
+  color: var(--muted);
+}
