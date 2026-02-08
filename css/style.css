@@ -79,6 +79,7 @@ body::after{
 }
 
 .card{
+  margin-top: clamp(40px, 10vh, 140px);
   width:min(720px, 92vw);
   border-radius: 22px;
   padding: clamp(18px, 4.2vw, 34px);
